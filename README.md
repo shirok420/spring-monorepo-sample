@@ -61,14 +61,21 @@ This project follows a modular architecture with two main modules:
 - Java 17
 - Spring Boot 3.1.5
 - Spring Data JPA
-- SQLite Database
+- SQLite Database (local development)
+- MySQL 8.0 Database (Docker environment)
 - Gradle (Multi-project build)
 - Lombok
 - Docker & Docker Compose
 
-## Database
+## Database Configuration
 
-The project uses SQLite as the database for simplicity. The database file will be created automatically in the root directory when the application starts.
+The project uses a dual database configuration:
+
+1. **Local Development**: SQLite is used for simplicity during local development. The database file will be created automatically in the root directory when the application starts.
+
+2. **Docker Environment**: MySQL 8.0 is used when running with Docker Compose. This provides a more production-like environment with a separate database service.
+
+This dual configuration allows for simple local development while still providing a more robust database solution for deployment scenarios.
 
 ## Getting Started
 
@@ -102,7 +109,18 @@ The application will start on <http://localhost:8080>
 docker-compose up -d
 ```
 
-The application will start on <http://localhost:8080>
+This will start:
+
+- The Spring Boot application on <http://localhost:8080>
+- A MySQL 8.0 database server on port 3306
+
+You can also use the helper script:
+
+```bash
+./docker.sh start
+```
+
+The application will automatically connect to the MySQL database.
 
 To stop the application:
 
@@ -114,6 +132,21 @@ To view logs:
 
 ```bash
 docker-compose logs -f
+```
+
+#### MySQL Database Management
+
+When running with Docker Compose, you can manage the MySQL database using the helper script:
+
+```bash
+# Connect to MySQL CLI
+./docker.sh mysql
+
+# Dump the database to a file
+./docker.sh mysql-dump
+
+# Restore the database from a dump file
+./docker.sh mysql-restore mysql_dump_20250404_123456.sql
 ```
 
 ### Building the Application

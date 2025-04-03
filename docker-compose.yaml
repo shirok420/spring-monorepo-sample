@@ -12,6 +12,9 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
       - SERVER_PORT=8080
       - JAVA_OPTS=-Xmx512m -Xms256m
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/springdb?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=springuser
+      - SPRING_DATASOURCE_PASSWORD=springpassword
     volumes:
       - app-data:/data
     restart: unless-stopped
@@ -23,6 +26,9 @@ services:
       start_period: 40s
     networks:
       - spring-network
+    depends_on:
+      mysql:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -32,8 +38,32 @@ services:
           cpus: '0.5'
           memory: 512M
 
+  mysql:
+    image: mysql:8.0
+    container_name: spring-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=springdb
+      - MYSQL_USER=springuser
+      - MYSQL_PASSWORD=springpassword
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - spring-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "springuser", "-pspringpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
 volumes:
   app-data:
+    driver: local
+  mysql-data:
     driver: local
 
 networks:
