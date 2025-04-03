@@ -1,0 +1,4 @@
+rootProject.name = 'spring-monorepo-sample'
+
+include 'core'
+include 'app'
