@@ -36,6 +36,8 @@ spring-monorepo-sample/
 ├── build.gradle            # Root build file
 ├── settings.gradle         # Gradle settings file
 ├── .env                    # Environment variables for local development
+├── Dockerfile              # Docker image definition
+├── docker-compose.yaml     # Docker Compose configuration
 └── README.md               # Project documentation
 ```
 
@@ -62,6 +64,7 @@ This project follows a modular architecture with two main modules:
 - SQLite Database
 - Gradle (Multi-project build)
 - Lombok
+- Docker & Docker Compose
 
 ## Database
 
@@ -73,8 +76,11 @@ The project uses SQLite as the database for simplicity. The database file will b
 
 - Java 17 or higher
 - Gradle 7.0 or higher
+- Docker and Docker Compose (for containerized deployment)
 
 ### Running the Application
+
+#### Option 1: Using Gradle
 
 1. Clone the repository
 2. Navigate to the project root directory
@@ -84,7 +90,31 @@ The project uses SQLite as the database for simplicity. The database file will b
 ./gradlew app:bootRun
 ```
 
-The application will start on http://localhost:8080
+The application will start on <http://localhost:8080>
+
+#### Option 2: Using Docker Compose
+
+1. Clone the repository
+2. Navigate to the project root directory
+3. Build and run the application using Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+The application will start on <http://localhost:8080>
+
+To stop the application:
+
+```bash
+docker-compose down
+```
+
+To view logs:
+
+```bash
+docker-compose logs -f
+```
 
 ### Building the Application
 
@@ -117,6 +147,20 @@ The application exposes the following REST endpoints:
 - `POST /api/items` - Create a new item
 - `PUT /api/items/{id}` - Update an existing item
 - `DELETE /api/items/{id}` - Delete an item
+
+## API Documentation with Swagger/OpenAPI
+
+The project includes Swagger/OpenAPI for API documentation and testing. When the application is running, you can access:
+
+- Swagger UI: <http://localhost:8080/swagger-ui.html>
+- OpenAPI Documentation: <http://localhost:8080/api-docs>
+
+Swagger UI provides an interactive interface to:
+
+- View all available endpoints
+- Test API calls directly from the browser
+- See request/response models
+- Understand API parameters and responses
 
 ## License
 
