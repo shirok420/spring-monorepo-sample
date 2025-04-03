@@ -159,6 +159,34 @@ To build the application, run:
 
 This will create executable JARs for each module.
 
+### Running with JAR File
+
+To run the application using the generated JAR file:
+
+```bash
+java -jar app/build/libs/app-0.0.1-SNAPSHOT.jar
+```
+
+To run with a specific profile:
+
+```bash
+java -Dspring.profiles.active=prod -jar app/build/libs/app-0.0.1-SNAPSHOT.jar
+```
+
+To run with environment variables from a .env file in a single command:
+
+```bash
+env $(cat .env | grep -v '^#' | xargs) java -jar app/build/libs/app-0.0.1-SNAPSHOT.jar
+```
+
+Or using Bash:
+
+```bash
+(export $(grep -v '^#' .env | xargs) && java -jar app/build/libs/app-0.0.1-SNAPSHOT.jar)
+```
+
+These commands load the environment variables from the .env file and apply them to the Java process running the JAR file.
+
 ### VSCode Setup
 
 This project is configured to work with VSCode. The `.env` file contains environment variables for local development.

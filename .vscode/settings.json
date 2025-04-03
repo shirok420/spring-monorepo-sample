@@ -19,17 +19,6 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
     },
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "**/.gradle": true,
-        "**/build": true,
-        "**/bin": true
-    },
     "java.test.config": {
         "vmArgs": [
             "-Dspring.profiles.active=test"
